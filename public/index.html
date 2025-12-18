@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rạp Phim Blockchain</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="logo">🎬 Rạp Phim</div>
+      <nav>
+        <button class="nav-btn" data-view="home">Trang chủ</button>
+        <button class="nav-btn" data-view="movies">Phim</button>
+        <button class="nav-btn" data-view="showtime">Lịch chiếu</button>
+        <button class="nav-btn" data-view="profile">Tài khoản</button>
+        <button class="nav-btn primary" data-view="admin">Admin</button>
+      </nav>
+    </header>
+
+    <main id="app">
+      <section id="home" class="view active">
+        <div class="banner">
+          <div class="banner-text">
+            <p class="eyebrow">Phim nổi bật</p>
+            <h1 id="highlight-title">The Quantum Heist</h1>
+            <p id="highlight-desc">
+              Đội siêu trộm xuyên đa vũ trụ đột nhập ngân hàng lượng tử — bom tấn
+              hành động 120 phút.
+            </p>
+            <div class="pill-row">
+              <span>Hành động</span>
+              <span>120 phút</span>
+              <span>C18</span>
+            </div>
+            <button class="primary" data-view="showtime">Đặt vé ngay</button>
+          </div>
+          <div class="banner-media">
+            <img src="https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?auto=format&fit=crop&w=900&q=60" alt="Poster" />
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <h2>Phim đang chiếu</h2>
+            <button class="link-btn" data-view="movies">Xem tất cả</button>
+          </div>
+          <div class="card-grid" id="now-playing"></div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <h2>Phim sắp chiếu</h2>
+            <button class="link-btn" data-view="movies">Xem tất cả</button>
+          </div>
+          <div class="card-grid" id="coming-soon"></div>
+        </div>
+      </section>
+
+      <section id="movies" class="view">
+        <div class="section-header">
+          <h2>Danh sách phim</h2>
+          <div class="filters">
+            <select id="filter-genre">
+              <option value="">Thể loại</option>
+              <option value="Hành động">Hành động</option>
+              <option value="Kinh dị">Kinh dị</option>
+              <option value="Tình cảm">Tình cảm</option>
+            </select>
+            <select id="filter-country">
+              <option value="">Quốc gia</option>
+              <option value="US">US</option>
+              <option value="VN">VN</option>
+              <option value="KR">KR</option>
+            </select>
+            <select id="filter-year">
+              <option value="">Năm</option>
+              <option>2025</option>
+              <option>2024</option>
+              <option>2023</option>
+            </select>
+            <select id="filter-state">
+              <option value="">Trạng thái</option>
+              <option value="now">Đang chiếu</option>
+              <option value="soon">Sắp chiếu</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-grid" id="movie-list"></div>
+      </section>
+
+      <section id="movie-detail" class="view">
+        <div class="section-header">
+          <h2 id="detail-title">Chi tiết phim</h2>
+          <button class="link-btn" data-view="movies">Quay lại</button>
+        </div>
+        <div class="detail-body">
+          <div class="trailer">
+            <iframe
+              id="detail-trailer"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="Trailer"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="detail-meta">
+            <img id="detail-poster" alt="Poster" />
+            <div class="meta">
+              <p><strong>Thời lượng:</strong> <span id="detail-duration"></span></p>
+              <p><strong>Độ tuổi:</strong> <span id="detail-rating"></span></p>
+              <p><strong>Diễn viên:</strong> <span id="detail-cast"></span></p>
+              <p><strong>Đạo diễn:</strong> <span id="detail-director"></span></p>
+              <p><strong>Thể loại:</strong> <span id="detail-genre"></span></p>
+              <p><strong>Ngôn ngữ:</strong> <span id="detail-lang"></span></p>
+              <p><strong>Nội dung:</strong></p>
+              <p id="detail-desc" class="muted"></p>
+              <button class="primary" data-view="showtime">Đặt vé</button>
+            </div>
+          </div>
+          <div class="section">
+            <h3>Lịch chiếu</h3>
+            <div id="detail-showtimes" class="showtime-grid"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="showtime" class="view">
+        <div class="section-header">
+          <h2>Chọn suất chiếu</h2>
+          <button class="link-btn" data-view="movies">Chọn phim khác</button>
+        </div>
+        <div id="cinema-list" class="showtime-list"></div>
+      </section>
+
+      <section id="seats" class="view">
+        <div class="section-header">
+          <h2>Chọn ghế</h2>
+          <div>
+            <button class="link-btn" data-view="showtime">Đổi suất</button>
+            <button class="link-btn" data-view="movies">Đổi phim</button>
+          </div>
+        </div>
+        <div class="seats-layout">
+          <div class="screen">Màn hình</div>
+          <div id="seat-map" class="seat-grid"></div>
+          <div class="legend">
+            <span><span class="seat available"></span>Trống</span>
+            <span><span class="seat selected"></span>Đang chọn</span>
+            <span><span class="seat booked"></span>Đã đặt</span>
+            <span><span class="seat vip"></span>VIP</span>
+          </div>
+        </div>
+        <aside class="summary">
+          <h3>Tóm tắt</h3>
+          <p id="summary-movie"></p>
+          <p id="summary-theater"></p>
+          <p id="summary-time"></p>
+          <p>Ghế: <span id="summary-seats">-</span></p>
+          <p>Tổng: <strong id="summary-total">0 đ</strong></p>
+          <button class="primary" data-view="payment">Tiếp tục</button>
+        </aside>
+      </section>
+
+      <section id="payment" class="view">
+        <div class="section-header">
+          <h2>Thanh toán</h2>
+          <button class="link-btn" data-view="seats">Quay lại</button>
+        </div>
+        <div class="payment-layout">
+          <div>
+            <h3>Phương thức</h3>
+            <div class="pay-options">
+              <label><input type="radio" name="pay" checked /> Ví MoMo</label>
+              <label><input type="radio" name="pay" /> ZaloPay</label>
+              <label><input type="radio" name="pay" /> Thẻ ngân hàng</label>
+              <label><input type="radio" name="pay" /> Tiền mặt tại rạp</label>
+              <label><input type="radio" name="pay" /> Blockchain</label>
+            </div>
+          </div>
+          <aside class="summary">
+            <h3>Đơn hàng</h3>
+            <p id="pay-movie"></p>
+            <p id="pay-theater"></p>
+            <p id="pay-time"></p>
+            <p>Ghế: <span id="pay-seats"></span></p>
+            <p>Tổng: <strong id="pay-total">0 đ</strong></p>
+            <button class="primary" data-view="ticket">Thanh toán</button>
+          </aside>
+        </div>
+      </section>
+
+      <section id="ticket" class="view">
+        <div class="section-header">
+          <h2>Vé của bạn</h2>
+          <button class="link-btn" data-view="home">Về trang chủ</button>
+        </div>
+        <div class="ticket-card">
+          <div>
+            <p class="eyebrow">Mã QR</p>
+            <div class="qr">###</div>
+          </div>
+          <div class="ticket-info">
+            <p id="ticket-movie"></p>
+            <p id="ticket-theater"></p>
+            <p id="ticket-time"></p>
+            <p>Ghế: <span id="ticket-seats"></span></p>
+          </div>
+          <div class="ticket-actions">
+            <button class="secondary">Tải PDF</button>
+            <button class="primary" data-view="history">Xem lịch sử</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="history" class="view">
+        <div class="section-header">
+          <h2>Lịch sử vé</h2>
+          <div class="filters">
+            <input type="date" />
+            <select>
+              <option>Rạp</option>
+              <option>Galaxy</option>
+              <option>BHD</option>
+            </select>
+            <select>
+              <option>Trạng thái</option>
+              <option>Đang chiếu</option>
+              <option>Đã chiếu</option>
+            </select>
+          </div>
+        </div>
+        <div id="history-list" class="list"></div>
+      </section>
+
+      <section id="profile" class="view">
+        <div class="section-header">
+          <h2>Tài khoản</h2>
+          <button class="link-btn" data-view="auth">Đăng nhập</button>
+        </div>
+        <div class="profile-card">
+          <div class="avatar">NT</div>
+          <div>
+            <p><strong>Nguyễn Trọng</strong></p>
+            <p>trong@example.com</p>
+            <button class="secondary small">Đổi mật khẩu</button>
+          </div>
+        </div>
+        <div class="section">
+          <h3>Vé đã mua</h3>
+          <div id="profile-tickets" class="list"></div>
+        </div>
+      </section>
+
+      <section id="auth" class="view">
+        <div class="auth-forms">
+          <div class="card">
+            <h3>Đăng nhập</h3>
+            <input placeholder="Email" />
+            <input placeholder="Mật khẩu" type="password" />
+            <button class="primary">Đăng nhập</button>
+            <button class="link-btn small">Quên mật khẩu?</button>
+          </div>
+          <div class="card">
+            <h3>Đăng ký</h3>
+            <input placeholder="Email" />
+            <input placeholder="Mật khẩu" type="password" />
+            <input placeholder="Xác nhận mật khẩu" type="password" />
+            <button class="secondary">Tạo tài khoản</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="admin" class="view">
+        <div class="section-header">
+          <h2>Admin Panel</h2>
+          <div class="tab-row">
+            <button class="tab active" data-admin="movies">Quản lý phim</button>
+            <button class="tab" data-admin="showtimes">Quản lý suất chiếu</button>
+            <button class="tab" data-admin="rooms">Quản lý phòng</button>
+            <button class="tab" data-admin="stats">Thống kê</button>
+          </div>
+        </div>
+        <div id="admin-content" class="card-grid"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        <p><strong>Rạp Phim Blockchain</strong></p>
+        <p>Email: support@rapphim.vn</p>
+      </div>
+      <div class="socials">
+        <span>Facebook</span>
+        <span>Instagram</span>
+        <span>Youtube</span>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,27 @@
+{
+  "name": "blockchain_banvexemphim",
+  "version": "1.0.0",
+  "description": "Website bán vé xem phim - giao diện tĩnh mẫu",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huutrongk24/Blockchain_banvexemphim.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huutrongk24/Blockchain_banvexemphim/issues"
+  },
+  "homepage": "https://github.com/huutrongk24/Blockchain_banvexemphim#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongodb": "^7.0.0",
+    "nodemon": "^3.1.11"
+  }
+}
